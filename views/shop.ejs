@@ -11,6 +11,7 @@
 
         <script src="https://kit.fontawesome.com/a41e9403cf.js" crossorigin="anonymous"></script>
         <title>BikeShop - Shop</title>
+        <script src="https://js.stripe.com/v3/"></script>
     </head>
 
     <body>
@@ -40,6 +41,12 @@
 
             <h1>Basket</h1>
 
+            <% if (dataCardBike.length == 0) { %>
+
+            <h4 class="no-article">No article in the Basket</h4>
+
+            <% } else { %>
+
             <div class="row">
                 <table class="table">
                     <thead>
@@ -66,14 +73,15 @@
                                     <%= dataCardBike[i].name %>
                                 </td>
                                 <td>
-                                    <form>
+                                    <form action="/updateqte" method="post">
                                         <input type="text" name="quantity" value="<%= dataCardBike[i].quantity%>">
+                                        <input type="hidden" name="position" value="<%= i %>">
                                         <button class="btn btn-outline-info btn-sm" name="button"><i class="fas fa-sync-alt"></i></button>
                                     </form>
                                 </td>
                                 <td><%= dataCardBike[i].price %>€</td>
                                 <td><%= dataCardBike[i].price * dataCardBike[i].quantity %>€</td>
-                                <td><button class="btn btn-outline-info btn-sm" name="button"><i class="far fa-trash-alt"></i></button></td>
+                                <td><a href="/delete-shop?position=<%=i%>"><button class="btn btn-outline-info btn-sm" name="button"><i class="far fa-trash-alt"></i></button></a></td>
                             </tr>
                         <%
                             totalCmd += dataCardBike[i].price * dataCardBike[i].quantity;
@@ -96,14 +104,43 @@
             </div>
             <div class="row">
                 <div class="col-12 text-right">
-                    <button class="btn btn-outline-info btn-sm btn-checkout" name="button-checkout">Checkout</button>
+                    <button id="checkout-button" class="btn btn-outline-info btn-sm btn-checkout" name="button-checkout">Checkout</button>
+                    <!-- <script type="text/javascript">
+                        var stripe = Stripe('pk_test_51HfNBZBZAiyJlzCqaGLpIyqd3t9vIxwsTV8mfDWR3CP7KEIIqj4l6gpZUmusZWkHvtPUxcUsYl2cN7kzpHdyJUYT00fx2p3oji');
+                        var checkoutButton = document.getElementById('checkout-button');
+                   
+                        checkoutButton.addEventListener('click', function() {
+                          fetch('/create-checkout-session', {
+                            method: 'POST',
+                          })
+                          .then(function(response) {
+                            return response.json();
+                          })
+                          .then(function(session) {
+                            return stripe.redirectToCheckout({ sessionId: session.id });
+                          })
+                          .then(function(result) {
+                            // If `redirectToCheckout` fails due to a browser or network
+                            // error, you should display the localized error message to your
+                            // customer using `error.message`.
+                            if (result.error) {
+                              alert(result.error.message);
+                            }
+                          })
+                          .catch(function(error) {
+                            console.error('Error:', error);
+                          });
+                        });
+                      </script> -->
                 </div>
             </div>
+
+            <% } %>
                 
         </div>
         
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+        <script src="/javascript/script.js"></script>
     </body>
 </html>

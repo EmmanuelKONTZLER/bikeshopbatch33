@@ -45,7 +45,7 @@
                             <div class="card-body text-center">
                                 <h5 class="card-title"><%= dataBike[i].name%></h5>
                                 <%= dataBike[i].price%>€
-                                <a href="shop" class="btn btn-outline-info btn-sm">Buy</a>
+                                <a href="/shop?name=<%= dataBike[i].name%>&url=<%= dataBike[i].url%>&price=<%= dataBike[i].price%>" class="btn btn-outline-info btn-sm">Buy</a>
                             </div>
                         </div>
                     </div>

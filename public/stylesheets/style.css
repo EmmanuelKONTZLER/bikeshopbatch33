@@ -65,5 +65,7 @@ body{
     font-weight: bold;
 }
 
-
+.no-article {
+    color: red
+}
 
